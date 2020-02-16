@@ -1,0 +1,16 @@
+.style-block-panel {
+    border: 1px solid rgba(0,0,0,0.16);
+    border-left: none;
+    border-right: none;
+    text-align: left;
+}
+
+.style-block-panel > button {
+    background-color: white;
+    border: none;
+    color: #757575;
+}
+
+.style-block-panel > * {
+    margin: 2px 2px;
+}

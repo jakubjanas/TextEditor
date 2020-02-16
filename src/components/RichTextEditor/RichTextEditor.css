@@ -1,0 +1,18 @@
+.text-area {
+  background-color: white;
+  text-align: left;
+  padding: 5px 5px 0 5px;
+}
+
+.text-area .DraftEditor-root {
+  height: 500px;
+  overflow-y: auto;
+}
+
+.text-area .public-DraftEditor-content, .DraftEditor-editorContainer {
+  height: 100%
+}
+
+.style-block {
+  margin-bottom: 10px;
+}
