@@ -17,12 +17,20 @@ import {
       );
   }
 
-  export const Link = (props) => {
-    const { contentState, entityKey } = props;
+  export const Link = ({ contentState, entityKey, children }) => {
     const { url } = contentState.getEntity(entityKey).getData();
 
-    return (<a href={url} target="_blank">{props.children}</a>);
+    return (<a href={url} rel="noopener noreferrer" target="_blank">{children}</a>);
   }
+
+  const isUrl = (link) => {
+    const expression =  /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm;
+    var regex = new RegExp(expression);
+
+    return link.match(regex);
+  }
+
+  const withHttps = url => !/^https?:\/\//i.test(url) ? `https://${url}` : url;
 
   export const addLinkPlugin = {
     keyBindingFn(event, { getEditorState }) {
@@ -31,10 +39,11 @@ import {
         if (selection.isCollapsed()) {
           return;
         }
+
         if (KeyBindingUtil.hasCommandModifier(event) && event.which === 75) {
           return "add-link";
         }
-      },
+    },
 
     handleKeyCommand(command, editorState, eventTimeStamp, {setEditorState}) {
         if (command !== 'add-link'){
@@ -44,13 +53,13 @@ import {
         const link = window.prompt('Paste link');
         const selection = editorState.getSelection();
 
-        if (!link) {
+        if (!isUrl(link)) {
             setEditorState(RichUtils.toggleLink(editorState, selection, null));
             return 'handled';
         }
 
         const content = editorState.getCurrentContent();
-        const contentWithEntity = content.createEntity("LINK", "MUTABLE", {url: link});
+        const contentWithEntity = content.createEntity("LINK", "MUTABLE", {url: withHttps(link)});
         const newState = EditorState.push(editorState, contentWithEntity, 'create-entity');
 
         const entityKey = contentWithEntity.getLastCreatedEntityKey();
