@@ -32,6 +32,25 @@ import {
 
   const withHttps = url => !/^https?:\/\//i.test(url) ? `https://${url}` : url;
 
+  export const handleLinkCommand = (editorState, setEditorState) => {
+    const link = window.prompt('Paste link');
+    const selection = editorState.getSelection();
+
+    if (!isUrl(link)) {
+        setEditorState(RichUtils.toggleLink(editorState, selection, null));
+        return 'handled';
+    }
+
+    const content = editorState.getCurrentContent();
+    const contentWithEntity = content.createEntity("LINK", "MUTABLE", {url: withHttps(link)});
+    const newState = EditorState.push(editorState, contentWithEntity, 'create-entity');
+
+    const entityKey = contentWithEntity.getLastCreatedEntityKey();
+    setEditorState(RichUtils.toggleLink(newState, selection, entityKey));
+
+    return 'handled';
+  }
+
   export const addLinkPlugin = {
     keyBindingFn(event, { getEditorState }) {
         const editorState = getEditorState();
@@ -50,22 +69,7 @@ import {
             return 'not-handled';
         }
         
-        const link = window.prompt('Paste link');
-        const selection = editorState.getSelection();
-
-        if (!isUrl(link)) {
-            setEditorState(RichUtils.toggleLink(editorState, selection, null));
-            return 'handled';
-        }
-
-        const content = editorState.getCurrentContent();
-        const contentWithEntity = content.createEntity("LINK", "MUTABLE", {url: withHttps(link)});
-        const newState = EditorState.push(editorState, contentWithEntity, 'create-entity');
-
-        const entityKey = contentWithEntity.getLastCreatedEntityKey();
-        setEditorState(RichUtils.toggleLink(newState, selection, entityKey));
-
-        return 'handled';
+        return handleLinkCommand(editorState, setEditorState);
     },
 
     decorators: [
