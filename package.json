@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.2.1",
     "babel-polyfill": "^6.26.0",
     "draft-js": "^0.11.4",
+    "draft-js-plugins-editor": "^3.0.0",
     "mdbreact": "^4.25.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",

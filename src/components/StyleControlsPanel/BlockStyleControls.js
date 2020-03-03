@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MDBIcon } from 'mdbreact';
 
-export const BlockStyleConstrols = ({onToggleBlockStyleButtonClick}) => {
+export const BlockStyleConstrols = ({onToggleBlockStyleButtonClick, commandHandler}) => {
     const [selectedHeader, setSelectedHeader] = useState('unstyled');
 
     const handleOnSelectChange = (event) => {
@@ -12,7 +12,7 @@ export const BlockStyleConstrols = ({onToggleBlockStyleButtonClick}) => {
     }
     return (
         <>
-            <button onClick={() => onToggleBlockStyleButtonClick('RichEditor-blockquote')}><MDBIcon icon="quote-left" /></button>
+            <button onClick={() => onToggleBlockStyleButtonClick('blockquote')}><MDBIcon icon="quote-left" /></button>
             <select onChange={handleOnSelectChange} value={selectedHeader}>
                 <option value={'unstyled'}>Normal</option>
                 <option value={'header-one'}>h1</option>
@@ -24,6 +24,7 @@ export const BlockStyleConstrols = ({onToggleBlockStyleButtonClick}) => {
             </select>
             <button onClick={() => onToggleBlockStyleButtonClick('unordered-list-item')}><MDBIcon icon="list-ul"/></button>
             <button onClick={() => onToggleBlockStyleButtonClick('ordered-list-item')}><MDBIcon icon="list-ol"/></button>
+            <button onClick={() => commandHandler('add-link')}>Link</button>
         </>
     )
 }
