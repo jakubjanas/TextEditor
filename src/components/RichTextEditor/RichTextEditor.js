@@ -14,7 +14,6 @@ export const RichTextEditorComponent = () => {
    }
 
    const onToggleBlockStyleHandler = (style) => {
-     console.log(style);
      setEditorState(RichUtils.toggleBlockType(editorState, style));
    }
 
@@ -24,7 +23,6 @@ export const RichTextEditorComponent = () => {
 
    const handleCommand = command => {
      const newState = RichUtils.handleKeyCommand(editorState, command);
-     console.log(command);
 
      if (newState) {
        setEditorState(newState);
