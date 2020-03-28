@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MDBIcon } from 'mdbreact';
 
-export const BlockStyleConstrols = ({onToggleBlockStyleButtonClick, onAddLink}) => {
+export const BlockStyleConstrols = ({onToggleBlockStyleButtonClick, onAddLink, onAddImage}) => {
     const [selectedHeader, setSelectedHeader] = useState('unstyled');
 
     const handleOnSelectChange = (event) => {
@@ -25,6 +25,7 @@ export const BlockStyleConstrols = ({onToggleBlockStyleButtonClick, onAddLink}) 
             <button onClick={() => onToggleBlockStyleButtonClick('unordered-list-item')}><MDBIcon icon="list-ul"/></button>
             <button onClick={() => onToggleBlockStyleButtonClick('ordered-list-item')}><MDBIcon icon="list-ol"/></button>
             <button onClick={onAddLink}>Link</button>
+            <button onClick={onAddImage}>Img</button>
         </>
     )
 }

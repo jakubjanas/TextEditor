@@ -24,6 +24,10 @@ import {
   }
 
   const isUrl = (link) => {
+    if(!link) {
+      return false;
+    }
+
     const expression =  /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm;
     var regex = new RegExp(expression);
 
